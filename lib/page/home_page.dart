@@ -1,11 +1,15 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_to_text_example/api/speech_api.dart';
-import 'package:speech_to_text_example/main.dart';
-import 'package:speech_to_text_example/widget/substring_highlighted.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+
+import '../api/speech_api.dart';
+import '../emotiondetect.dart';
+import '../main.dart';
 import '../utils.dart';
+import '../widget/substring_highlighted.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,6 +26,9 @@ class _HomePageState extends State<HomePage> {
           title: Text(MyApp.title),
           centerTitle: true,
           actions: [
+            IconButton(onPressed: () {
+              Get.to(() => EmotionDetect());
+            }, icon:Icon(Icons.arrow_forward_ios)),
             Builder(
               builder: (context) => IconButton(
                 icon: Icon(Icons.content_copy),
