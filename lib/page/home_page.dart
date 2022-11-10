@@ -1,9 +1,9 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:speech_to_text_example/api/speech_api.dart';
-import 'package:speech_to_text_example/main.dart';
-import 'package:speech_to_text_example/widget/substring_highlighted.dart';
+import 'package:jack/api/speech_api.dart';
+import 'package:jack/main.dart';
+import 'package:jack/widget/substring_highlighted.dart';
 
 import '../utils.dart';
 
@@ -79,3 +79,5 @@ class _HomePageState extends State<HomePage> {
         },
       );
 }
+
+
