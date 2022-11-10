@@ -1,11 +1,12 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:jack/api/speech_api.dart';
-import 'package:jack/main.dart';
-import 'package:jack/widget/substring_highlighted.dart';
 
+
+import '../api/speech_api.dart';
+import '../main.dart';
 import '../utils.dart';
+import '../widget/substring_highlighted.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('title'),
+          title: Text(MyApp.title),
           centerTitle: true,
           actions: [
             Builder(
