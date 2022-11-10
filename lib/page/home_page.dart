@@ -5,7 +5,10 @@ import 'package:jack/api/speech_api.dart';
 import 'package:jack/main.dart';
 import 'package:jack/widget/substring_highlighted.dart';
 
+import '../api/speech_api.dart';
+import '../main.dart';
 import '../utils.dart';
+import '../widget/substring_highlighted.dart';
 
 class HomePage extends StatefulWidget {
   @override
