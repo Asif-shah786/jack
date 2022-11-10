@@ -1,6 +1,5 @@
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashController extends GetxController{
 
