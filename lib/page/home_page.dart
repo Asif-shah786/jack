@@ -1,6 +1,8 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 
 import '../api/speech_api.dart';
@@ -40,19 +42,25 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           reverse: true,
           padding: const EdgeInsets.all(30).copyWith(bottom: 150),
-          child: SubstringHighlight(
-            text: text,
-            terms: Command.all,
-            textStyle: TextStyle(
-              fontSize: 32.0,
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-            ),
-            textStyleHighlight: TextStyle(
-              fontSize: 32.0,
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
-            ),
+          child: Column(
+            children: [
+              SubstringHighlight(
+                text: text,
+                terms: Command.all,
+                textStyle: const TextStyle(
+                  fontSize: 32.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                ),
+                textStyleHighlight: const TextStyle(
+                  fontSize: 32.0,
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(height: Get.height/4,),
+              Lottie.asset("assets/lf20_g1pduE.json",fit: BoxFit.contain,height: 200,width: 200),
+            ],
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

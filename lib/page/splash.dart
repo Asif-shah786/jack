@@ -21,10 +21,10 @@ class SplashScreen extends GetView<SplashController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Lottie.asset("assets/lf20_3lr9fsii.json",fit: BoxFit.contain),
+              Lottie.asset("assets/lf20_3lr9fsii.json",fit: BoxFit.contain,height: 200,width: 200),
              const Text("Getting Jack ready...",style: TextStyle(
                 fontSize: 24,
-                color: Colors.purpleAccent,
+                color: Colors.black,
                 fontWeight: FontWeight.w500
               ),)
             ],
