@@ -12,6 +12,7 @@ class SpeechApi {
       _speech.stop();
       return true;
     }
+    print('Start Listening');
 
     final isAvailable = await _speech.initialize(
       onStatus: (status) => onListening(_speech.isListening),
