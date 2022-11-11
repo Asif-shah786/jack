@@ -13,16 +13,17 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  static final String title = 'Jack';
+class App extends StatelessWidget {
+  const App({super.key});
+
 
   @override
   Widget build(BuildContext context) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: title,
+        title: 'Jack',
         theme: ThemeData(primarySwatch: Colors.green),
         getPages: Routes.pages,
         initialRoute: "/",

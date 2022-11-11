@@ -11,7 +11,7 @@ checkAuth();
   }
   void checkAuth() {
     Future.delayed(const Duration(seconds: 15), () {
-      Get.offAllNamed("/home_page");
+      Get.offAllNamed("/quotes");
     });
   }
 }

@@ -8,6 +8,15 @@
     <!-- 2. To overcome bind to recognition service failed issue -->
     <queries>
         <package android:name="com.google.android.googlequicksearchbox"/>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+        <!-- Place inside the <queries> element. -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
     </queries>
 
     <application

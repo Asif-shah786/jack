@@ -1,24 +1,28 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:camera/camera.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:highlight_text/highlight_text.dart';
+import 'package:jack/page/detection_page.dart';
 import 'package:lottie/lottie.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
-
 import '../api/speech_api.dart';
-import '../main.dart';
 import '../utils.dart';
 import '../widget/substring_highlighted.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String _text = 'Press the button and start speaking';
+  String _text = 'Press the button and tell Jack where to go..';
   bool _isListening = false;
   final Map<String, HighlightedWord> _highlights = {
     'jack': HighlightedWord(
@@ -67,11 +71,10 @@ class _HomePageState extends State<HomePage> {
     _speech = stt.SpeechToText();
   }
 
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(MyApp.title),
+          title: Text("Jack"),
           centerTitle: true,
           actions: [
             Builder(
@@ -94,7 +97,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: Get.height * 0.03,),
+              SizedBox(
+                height: Get.height * 0.03,
+              ),
               SizedBox(
                 width: Get.width,
                 height: Get.height * 0.3,
@@ -113,10 +118,22 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              SizedBox(height: Get.height * 0.02,),
-              Lottie.asset("assets/lf20_g1pduE.json",
-                  fit: BoxFit.contain,height: 200,width: 200),
-              Text('Jack\'s Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%',
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  var status = await Permission.camera.status;
+                  if (status.isDenied || status.isPermanentlyDenied || status.isRestricted) {
+                    await Permission.camera.request();
+                  }
+                  List cameras = await availableCameras();
+                  Get.to(() => DetectionPage(cameras: cameras));
+                },
+                child: Lottie.asset("assets/lf20_g1pduE.json", fit: BoxFit.contain, height: 200, width: 200),
+              ),
+              Text(
+                'Jack\'s Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16.0,
@@ -136,7 +153,9 @@ class _HomePageState extends State<HomePage> {
           repeatPauseDuration: const Duration(milliseconds: 100),
           repeat: true,
           child: FloatingActionButton(
-            onPressed: _listen,
+            onPressed: () {
+              _listen();
+            },
             child: Icon(_isListening ? Icons.mic : Icons.mic_none),
           ),
         ),
@@ -148,7 +167,7 @@ class _HomePageState extends State<HomePage> {
           setState(() => this._isListening = isListening);
 
           if (!isListening) {
-            Future.delayed(Duration(seconds: 1), () {
+            Future.delayed(Duration(seconds: 2), () {
               Utils.scanText(_text);
             });
           }
@@ -165,12 +184,17 @@ class _HomePageState extends State<HomePage> {
         setState(() => _isListening = true);
         _speech.listen(
           onDevice: false,
-          onResult: (val) => setState(() {
-            _text = val.recognizedWords;
-            if (val.hasConfidenceRating && val.confidence > 0) {
-              _confidence = val.confidence;
-            }
-          }),
+          onResult: (SpeechRecognitionResult val) {
+            if (!val.finalResult) return;
+            setState(() {
+              _text = val.recognizedWords;
+
+              if (val.hasConfidenceRating && val.confidence > 0) {
+                _confidence = val.confidence;
+              }
+              Utils.scanText(_text);
+            });
+          },
         );
       }
     } else {
